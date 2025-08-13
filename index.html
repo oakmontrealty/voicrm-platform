@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiCRM - Professional Voice Communication Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Forum:wght@400&family=Avenir:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#636B56">
+</head>
+<body>
+    <div id="connection-status" class="connection-status disconnected">
+        🔴 Connecting to Voice Services...
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>VoiCRM</h1>
+            <p class="subtitle">Professional Voice Communication Platform</p>
+            <div class="quality-badge">Production Voice Calling</div>
+        </div>
+        
+        <div class="main-grid">
+            <!-- Voice & Calling Section -->
+            <div class="card voice-section">
+                <h2>🎤 Voice-Powered Communication</h2>
+                
+                <!-- Call Quality Monitor -->
+                <div class="quality-monitor">
+                    <div class="quality-metric">
+                        <div class="metric-value" id="latency">--ms</div>
+                        <div class="metric-label">Latency</div>
+                    </div>
+                    <div class="quality-metric">
+                        <div class="metric-value" id="quality-score">--</div>
+                        <div class="metric-label">Quality Score</div>
+                    </div>
+                    <div class="quality-metric">
+                        <div class="metric-value" id="uptime">--</div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                    <div class="quality-metric">
+                        <div class="metric-value" id="packet-loss">--%</div>
+                        <div class="metric-label">Packet Loss</div>
+                    </div>
+                </div>
+                
+                <!-- Voice Logging -->
+                <div class="feature-section">
+                    <h3>🎯 Voice-to-Action Logging</h3>
+                    <button id="voice-btn" class="voice-btn">🎙️ Start Voice Logging</button>
+                    <p style="color: var(--grey); margin-top: 12px; font-size: 0.95rem;">Say: "Michael, +61412345678" for instant contact creation</p>
+                </div>
+                
+                <!-- Professional Dialer -->
+                <div class="feature-section">
+                    <h3>📞 Professional Dialer - Real Calling Enabled</h3>
+                    <input type="tel" id="phone-input" class="number-input" placeholder="Enter phone number (+61412345678)" maxlength="15">
+                    
+                    <div class="dialer-grid">
+                        <button class="dialer-btn" onclick="addDigit('1')">1</button>
+                        <button class="dialer-btn" onclick="addDigit('2')">2 <span style="font-size:0.75rem;">ABC</span></button>
+                        <button class="dialer-btn" onclick="addDigit('3')">3 <span style="font-size:0.75rem;">DEF</span></button>
+                        <button class="dialer-btn" onclick="addDigit('4')">4 <span style="font-size:0.75rem;">GHI</span></button>
+                        <button class="dialer-btn" onclick="addDigit('5')">5 <span style="font-size:0.75rem;">JKL</span></button>
+                        <button class="dialer-btn" onclick="addDigit('6')">6 <span style="font-size:0.75rem;">MNO</span></button>
+                        <button class="dialer-btn" onclick="addDigit('7')">7 <span style="font-size:0.75rem;">PQRS</span></button>
+                        <button class="dialer-btn" onclick="addDigit('8')">8 <span style="font-size:0.75rem;">TUV</span></button>
+                        <button class="dialer-btn" onclick="addDigit('9')">9 <span style="font-size:0.75rem;">WXYZ</span></button>
+                        <button class="dialer-btn" onclick="addDigit('*')">*</button>
+                        <button class="dialer-btn" onclick="addDigit('0')">0 <span style="font-size:0.75rem;">+</span></button>
+                        <button class="dialer-btn" onclick="addDigit('#')">#</button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <button id="call-btn" class="call-btn" onclick="makeCall()" style="flex: 1;">📞 Make Real Call</button>
+                        <button class="call-btn" onclick="clearInput()" style="background: linear-gradient(135deg, var(--grey), #2d2d2d); flex: 0.3;">⌫</button>
+                    </div>
+                    <p style="color: var(--sage); margin-top: 8px; font-size: 0.85rem; text-align: center;">✅ Production calling enabled - calls will connect to real phone numbers</p>
+                </div>
+                
+                <div id="status" class="status info">
+                    🎯 VoiCRM Production System Initializing...
+                </div>
+                
+                <div id="last-spoken" style="margin: 15px 0; padding: 15px; background: rgba(248, 242, 231, 0.5); border-radius: 12px; min-height: 30px; font-style: italic; color: var(--grey); border: 1px solid rgba(99, 107, 86, 0.1);">
+                    Voice commands and transcripts appear here...
+                </div>
+            </div>
+            
+            <!-- CRM Pipeline -->
+            <div class="card">
+                <h2>📊 Sales Pipeline</h2>
+                <div style="margin: 20px 0;">
+                    <div class="pipeline-stage active">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600; color: var(--sage);">🎯 New Leads</span>
+                            <span style="background: var(--sage); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">3</span>
+                        </div>
+                        <div style="color: var(--grey); font-size: 0.85rem; margin-top: 6px;">Fresh inquiries and contacts</div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600; color: var(--sage);">📞 Contact Made</span>
+                            <span style="background: var(--tan); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">5</span>
+                        </div>
+                        <div style="color: var(--grey); font-size: 0.85rem; margin-top: 6px;">Initial contact established</div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600; color: var(--sage);">🏠 Meeting Set</span>
+                            <span style="background: var(--brown); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">2</span>
+                        </div>
+                        <div style="color: var(--grey); font-size: 0.85rem; margin-top: 6px;">Appointments scheduled</div>
+                    </div>
+                    
+                    <div class="pipeline-stage">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600; color: var(--sage);">✅ Closed</span>
+                            <span style="background: var(--sage); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">1</span>
+                        </div>
+                        <div style="color: var(--grey); font-size: 0.85rem; margin-top: 6px;">Successfully completed</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 18px; background: linear-gradient(135deg, rgba(99, 107, 86, 0.1), rgba(122, 131, 101, 0.05)); border-radius: 12px; border: 1px solid rgba(99, 107, 86, 0.2);">
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.6rem; font-weight: 700; color: var(--sage);">$2.4M</div>
+                        <div style="color: var(--grey); font-size: 0.9rem; font-weight: 500;">Pipeline Value</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Contacts -->
+            <div class="card">
+                <h2>👥 Recent Contacts</h2>
+                <div id="attendees-list" class="attendees-list">
+                    <div class="attendee-item">
+                        <div style="flex: 1;">
+                            <div class="attendee-name">Sarah Wilson</div>
+                            <div class="attendee-phone">+61498765432</div>
+                            <div class="attendee-time">2 hours ago</div>
+                            <div style="margin-top: 8px;">
+                                <span style="background: rgba(99, 107, 86, 0.15); color: var(--sage); padding: 3px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">Hot Lead</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <button class="call-btn" onclick="makeCallToContact('+61498765432', 'Sarah Wilson')" style="margin-bottom: 8px; padding: 8px 16px; font-size: 0.9rem;">📞 Call</button>
+                        </div>
+                    </div>
+                    
+                    <div class="attendee-item">
+                        <div style="flex: 1;">
+                            <div class="attendee-name">Michael Chen</div>
+                            <div class="attendee-phone">+61454321098</div>
+                            <div class="attendee-time">1 day ago</div>
+                            <div style="margin-top: 8px;">
+                                <span style="background: rgba(178, 131, 84, 0.15); color: var(--tan); padding: 3px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">Follow Up</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <button class="call-btn" onclick="makeCallToContact('+61454321098', 'Michael Chen')" style="margin-bottom: 8px; padding: 8px 16px; font-size: 0.9rem;">📞 Call</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="refresh-btn" onclick="loadAttendees()" style="margin-top: 15px; width: 100%; padding: 12px 24px; background: linear-gradient(135deg, var(--sage), #7a8365); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-family: 'Avenir', sans-serif;">
+                    🔄 Refresh Contacts
+                </button>
+            </div>
+        </div>
+        
+        <!-- Bottom Analytics -->
+        <div class="card">
+            <h2>📈 Performance Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📞</div>
+                    <div class="stat-label">Calls Made Today</div>
+                    <div class="stat-value" style="color: var(--sage);" id="calls-made">0</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-label">New Contacts</div>
+                    <div class="stat-value" style="color: var(--tan);" id="attendees-logged">0</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-label">Conversion Rate</div>
+                    <div class="stat-value" style="color: var(--brown);">15.8%</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-label">Weekly Revenue</div>
+                    <div class="stat-value" style="color: var(--sage);">$847K</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-label">Response Time</div>
+                    <div class="stat-value" style="color: var(--tan);">2.3min</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🌟</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                    <div class="stat-value" style="color: var(--brown);">98.5%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Advanced Features Preview -->
+        <div class="card">
+            <h2>🚀 Advanced Features</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 25px;">
+                
+                <div class="feature-section">
+                    <h3>🧠 AI-Powered Insights</h3>
+                    <ul style="list-style: none; padding: 0; margin: 15px 0;">
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Real-time conversation analysis</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Automated call summaries</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Sentiment detection</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Next-action recommendations</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-section">
+                    <h3>📱 Mobile Excellence</h3>
+                    <ul style="list-style: none; padding: 0; margin: 15px 0;">
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Progressive web app</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Offline contact access</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Voice commands on-the-go</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• GPS-based lead logging</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-section">
+                    <h3>⚡ Automation Engine</h3>
+                    <ul style="list-style: none; padding: 0; margin: 15px 0;">
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Smart follow-up sequences</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Behavioral trigger campaigns</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Multi-channel messaging</li>
+                        <li style="margin: 8px 0; color: var(--grey); font-size: 0.9rem;">• Predictive lead scoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-production.js"></script>
+</body>
+</html>
